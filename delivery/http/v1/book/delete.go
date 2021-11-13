@@ -25,8 +25,6 @@ func (r *Route) Delete(c echo.Context) error {
 
 	bookID, _ := strconv.ParseInt(c.Param("id"), 10, 64)
 
-	//log.Fatal(bookID)
-
 	err := r.bookUseCase.Delete(ctx, book.DeleteBookRequest{ID: bookID})
 
 	if err != nil {
