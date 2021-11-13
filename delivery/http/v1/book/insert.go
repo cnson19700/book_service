@@ -1,30 +1,33 @@
-package user
+package book
 
 import (
 	"errors"
 
 	"github.com/cnson19700/pkg/apperror"
 	"github.com/cnson19700/pkg/utils"
-	"github.com/cnson19700/user_service/usecase/user"
 	"github.com/labstack/echo/v4"
+
+	"github.com/cnson19700/book_service/usecase/book"
 )
 
-func (r *Route) UpdateUser(c echo.Context) error {
+func (r *Route) Insert(c echo.Context) error {
 	var (
 		ctx      = &utils.CustomEchoContext{Context: c}
 		appError = apperror.AppError{}
+		req      = book.InsertRequest{}
 	)
-	form, err := c.MultipartForm()
-	if err != nil {
+	if err := c.Bind(&req); err != nil {
+		_ = errors.As(err, &appError)
+
 		return utils.Response.Error(ctx, apperror.ErrInvalidInput(err))
 	}
 
-	user, err := r.userUseCase.UpdateUser(ctx, user.UpdateRequest{Form: form})
+	res, err := r.bookUseCase.Insert(ctx, req)
 	if err != nil {
 		_ = errors.As(err, &appError)
 
 		return utils.Response.Error(ctx, appError)
 	}
 
-	return utils.Response.Success(ctx, user)
+	return utils.Response.Success(ctx, res)
 }

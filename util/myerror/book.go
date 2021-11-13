@@ -76,6 +76,16 @@ func ErrRatingAvgFormat(err error) apperror.AppError {
 	}
 }
 
+func ErrGetRatingAvg(err error) apperror.AppError {
+	return apperror.AppError{
+		Raw:       err,
+		ErrorCode: 200060,
+		HTTPCode:  http.StatusNotAcceptable,
+		Info:      "Get Rating Average failed",
+		Message:   "Get Rating Average failed",
+	}
+}
+
 func ErrReleaseDateFormat(err error) apperror.AppError {
 	return apperror.AppError{
 		Raw:       err,
@@ -95,5 +105,3 @@ func ErrSearchTextFormat(err error) apperror.AppError {
 		Message:   "Search book format is not valid",
 	}
 }
-
-
