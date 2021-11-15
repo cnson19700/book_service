@@ -3,6 +3,15 @@ gorun:
 
 herokulog:
 	heroku logs --tail --app book-sservice
+	heroku logs --tail --app authent-sservice
+	heroku logs --tail --app comment-sservice
+	heroku logs --tail --app users-sservice
+
+herokurestart:
+	heroku dyno:restart --app authent-service
+	heroku dyno:restart --app book-sservice
+	heroku dyno:restart --app users-sservice
+	heroku dyno:restart --app comment-sservice
 
 run:
 	@GO111MODULE=off go get -u github.com/husol/fresh
