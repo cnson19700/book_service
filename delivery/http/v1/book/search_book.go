@@ -38,12 +38,11 @@ func (r *Route) SearchBook(c echo.Context) error {
 			AuthorID:  authorID,
 			CateID:    cateID,
 			MinRating: minRating,
+			Keyword:   searchText,
 		},
 	}
 
-	//log.Fatal(req)
-
-	res, err := r.bookUseCase.SearchBook(ctx, searchText, req)
+	res, err := r.bookUseCase.SearchBook(ctx, req)
 	if err != nil {
 		_ = errors.As(err, &appError)
 

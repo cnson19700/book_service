@@ -58,7 +58,7 @@ func CheckFormatValue(formAtributeName string, value string) (bool, string) {
 			return false, appErr.QueryMsg.PageNotNumber
 		}
 		return true, value
-	case "search", "overview", "content":
+	case "overview", "content":
 		str := namestand.FormatText(value, true, true)
 		if str == "" {
 			return false, formAtributeName + appErr.QueryMsg.WrongFomat

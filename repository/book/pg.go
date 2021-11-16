@@ -77,7 +77,6 @@ func (r *pgRepository) GetTitle(ctx context.Context, title string) (*model.Book,
 
 func (r *pgRepository) SearchBook(ctx context.Context,
 	paginator *model.Paginator,
-	searchText string,
 	filter *model.BookFilter,
 	orders []string) (*model.BookResult, error) {
 	db := r.getClient(ctx)
@@ -87,6 +86,8 @@ func (r *pgRepository) SearchBook(ctx context.Context,
 	for _, order := range orders {
 		query.Order(order)
 	}
+
+	fmt.Println(filter)
 
 	if filter.CateID != 0 {
 		//filterCate = " JOIN book_categories ON book_categories.book_id = books.id AND book_categories.category_id = " + strconv.FormatInt(filter.CateID, 10)
@@ -103,10 +104,11 @@ func (r *pgRepository) SearchBook(ctx context.Context,
 		query.Where("books.rating_average > ?", filter.MinRating)
 	}
 
-	if searchText != "" {
+	if filter.Keyword != "" {
 		//filterTitle = "AND title LIKE " + "'%" + searchText + "%'"
-		query.Where("title LIKE ?", "%"+searchText+"%")
+		query.Where("title LIKE ?", "%"+filter.Keyword+"%")
 	}
+
 
 	//Paging
 	var res model.BookResult

@@ -14,7 +14,7 @@ type Repository interface {
 	Update(ctx context.Context, user *model.Book) (*model.Book, error)
 	SearchBook(ctx context.Context,
 		page *model.Paginator,
-		searchText string,
+
 		filter *model.BookFilter,
 		orders []string) (*model.BookResult, error)
 	CreateBookRating(ctx context.Context, bookRating *model.BookRating) (*model.BookRating, error)

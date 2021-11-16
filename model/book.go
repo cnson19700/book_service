@@ -23,9 +23,10 @@ type Book struct {
 }
 
 type BookFilter struct {
-	AuthorID  int64 `json:"author_id"`
-	CateID    int64 `json:"cate_id"`
-	MinRating int   `json:"min_rating"` //default value no filter: -1
+	AuthorID  int64  `json:"author_id"`
+	CateID    int64  `json:"cate_id"`
+	MinRating int    `json:"min_rating"` //default value no filter: -1
+	Keyword   string `json:"search"`
 }
 
 type BookResult struct {

@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/cnson19700/book_service/model"
-	checkform "github.com/cnson19700/book_service/package/checkForm"
 	"github.com/cnson19700/book_service/util/myerror"
 )
 
@@ -16,12 +15,7 @@ type SearchBookRequest struct {
 	OrderType string `json:"order_type,omitempty" query:"order_type"`
 }
 
-func (u *Usecase) SearchBook(ctx context.Context, searchText string, req SearchBookRequest) (*model.BookResult, error) {
-
-	isTrue, searchStr := checkform.CheckFormatValue("search", searchText)
-	if !isTrue {
-		return nil, myerror.ErrSearchTextFormat(nil)
-	}
+func (u *Usecase) SearchBook(ctx context.Context, req SearchBookRequest) (*model.BookResult, error) {
 
 	orders := make([]string, 0)
 	if req.OrderBy != "" {
@@ -37,7 +31,7 @@ func (u *Usecase) SearchBook(ctx context.Context, searchText string, req SearchB
 		pagnitor = req.Paginator
 	}
 
-	bookList, err := u.bookRepo.SearchBook(ctx, pagnitor, searchStr, req.Filter, orders)
+	bookList, err := u.bookRepo.SearchBook(ctx, pagnitor, req.Filter, orders)
 	if err != nil {
 		return nil, myerror.ErrGetBook(err)
 	}
