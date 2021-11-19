@@ -90,25 +90,20 @@ func (r *pgRepository) SearchBook(ctx context.Context,
 	fmt.Println(filter)
 
 	if filter.CateID != 0 {
-		//filterCate = " JOIN book_categories ON book_categories.book_id = books.id AND book_categories.category_id = " + strconv.FormatInt(filter.CateID, 10)
 		query.Joins("JOIN book_categories ON book_categories.book_id = books.id AND book_categories.category_id = ?", filter.CateID)
 	}
 
 	if filter.AuthorID != 0 {
-		//filterAuthor = "AND books.author_id = " + strconv.FormatInt(filter.AuthorID, 10)
 		query.Where("books.author_id = ?", filter.AuthorID)
 	}
 
 	if filter.MinRating != -1 {
-		//filterRate = "AND rating_average > " + strconv.Itoa(filter.MinRating)
 		query.Where("books.rating_average > ?", filter.MinRating)
 	}
 
 	if filter.Keyword != "" {
-		//filterTitle = "AND title LIKE " + "'%" + searchText + "%'"
 		query.Where("title LIKE ?", "%"+filter.Keyword+"%")
 	}
-
 
 	//Paging
 	var res model.BookResult

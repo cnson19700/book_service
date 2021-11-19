@@ -1,6 +1,3 @@
-gorun:
-	go run ./cmd/main.go
-
 herokulog:
 	heroku logs --tail --app book-sservice
 	heroku logs --tail --app authent-sservice
